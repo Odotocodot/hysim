@@ -1,6 +1,6 @@
 """Space Environment Module
 
-Contains classes to desribe objects in the Space Environment such as the Earth
+Contains classes to describe objects in the Space Environment such as the Earth
 and Sun. The Earth is represented at scale and the Sun is represented by a
 directional light source.
 """
@@ -51,7 +51,7 @@ class Sun:
         self.sun_position = direction
 
     def build_dict(self):
-        """Constucts dictionary for Sun object in Mitsuba scene"""
+        """Constructs dictionary for Sun object in Mitsuba scene"""
         self.sun_dict = {
             "sun_emitter": {
                 "type": "directional",
@@ -93,7 +93,7 @@ class Earth:
         self.position = []
 
     def build_dict(self):
-        """Consutucts dictionary for Earth object in mitsuba scene"""
+        """Constructs dictionary for Earth object in mitsuba scene"""
         self.earth_dict = {
             "earth": {
                 "type": "ply",

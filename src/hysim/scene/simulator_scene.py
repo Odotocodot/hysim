@@ -71,7 +71,7 @@ class SceneBuilder:
         Parameters
         ----------
         user_inputs : in_data.Configs
-            Object containing user input datat
+            Object containing user input data
         orbit_data : frames.MissionInputProcessor
             Orbit data converted from user inputs
         """

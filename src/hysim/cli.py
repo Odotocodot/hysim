@@ -43,7 +43,7 @@ subparsers = parser.add_subparsers(
 
 # Version Command
 parser.add_argument(
-    "-V", "--version", action="version", version=get_package_version("hysim")
+    "-V", "-v", "--version", action="version", version=get_package_version("hysim")
 )
 
 # Run Command
