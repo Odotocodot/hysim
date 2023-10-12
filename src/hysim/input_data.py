@@ -94,7 +94,7 @@ class Configs:
         else:
             setattr(self, file_type, config_data)
 
-    def _get_config_data(self, file):
+    def _get_config_data(self, file) -> tuple[str, dict]:
         """Reads contents of yaml file
 
         Parameters
@@ -110,8 +110,8 @@ class Configs:
             Data contained in yaml file
         """
         with open(file, "r") as contents:
-            config = yaml.safe_load(contents)
-        file_type = config["file_type"]
+            config: dict = yaml.safe_load(contents)
+        file_type: str = config["file_type"]
         del config["file_type"]
         return file_type, config
 

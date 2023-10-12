@@ -12,25 +12,30 @@ from hysim import sim
 
 
 def get_package_version(package: str) -> str:
-    version = pkg_resources.get_distribution(package).version
+    version: str = pkg_resources.get_distribution(package).version
     return f"{package} {version}"
 
 
-def return_unix_path_string(path):
+def return_unix_path_string(path: Path) -> str:
     return str(path).replace("\\", "/")
 
 
-def run_case():
+def run_case(run_directory: str):
     # TODO: Add support for relative case directory commands
 
     # if run_directory is None:
     #    run_directory = Path.cwd()
     # else:
     #    run_directory = Path.cwd() / Path(run_directory)
+    case_directory: Path = Path(run_directory)
 
-    run_directory = Path.cwd()
+    if case_directory.is_absolute() is False:
+        case_directory = Path.cwd() / run_directory
 
-    run_directory = return_unix_path_string(run_directory)
+    if case_directory.exists() is False:
+        logging.error("Invalid path to case directory. Terminating Hysim")
+        exit()
+    run_directory = return_unix_path_string(case_directory)
 
     sim.run_sim(run_directory)
 
@@ -38,8 +43,7 @@ def run_case():
 # == CLI ARGUMENTS == #
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers(
-    prog="command", dest="command", metavar="command"
-)
+    prog="command", dest="command", metavar="command")
 
 # Version Command
 parser.add_argument(
@@ -50,6 +54,7 @@ parser.add_argument(
 run_command = subparsers.add_parser("run", help="Run simulator case")
 run_command.set_defaults(func=run_case)
 run_command.add_argument("--debug", action="store_true")
+run_command.add_argument("-C", "-c", "--case_directory", default=Path.cwd())
 
 create_json_command = subparsers.add_parser("create_json")
 
@@ -74,12 +79,11 @@ def main():
 
     # Logger
     logging.basicConfig(
-        format=' %(levelname)-8s %(message)s',
-        stream=sys.stdout,
-        level=logging_level
+        format=" %(levelname)-8s %(message)s", stream=sys.stdout, level=logging_level
     )
 
-    args.func()
+    # args.func()
+    args.func(args.case_directory)
 
 
 if __name__ == "__main__":

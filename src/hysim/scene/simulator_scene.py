@@ -136,7 +136,7 @@ class SceneBuilder:
         # Build dict from data:
         self.sun.build_dict()
 
-    def build_chaser(self):
+    def build_chaser(self, run_directory: str):
         """Builds Chaser spacecraft dictionary containing sensor parameters"""
         # --- Sensor --- #
         # TODO: Add option to choose between internal sensor data, user
@@ -144,7 +144,7 @@ class SceneBuilder:
 
         # Get the spectrum file path
         spectrum_file = self.user_inputs.sensor_config["spectrum_file"]
-        spectrum_path = dh.get_user_data_path(spectrum_file)
+        spectrum_path = dh.get_user_data_path(run_directory, spectrum_file)
         spectrum_data = spd_reader.SPDReader(spectrum_path)
 
         # Build the spectral bands
@@ -184,7 +184,7 @@ class SceneBuilder:
 
         self.chaser.build_dict()
 
-    def build_target(self):
+    def build_target(self, run_directory: str):
         """Builds Target spacecraft dictionary describing object model"""
         self.target = targ.Target()
         for part_name in self.user_inputs.parts_config["components"]:
@@ -194,7 +194,7 @@ class SceneBuilder:
             part = targ.PartBuilder(part_name)
 
             # Assign part mesh:
-            part.mesh_file = dh.get_user_data_path(part_input["file"])
+            part.mesh_file = dh.get_user_data_path(run_directory, part_input["file"])
 
             # Assign material:
             if "user_material" in part_input:

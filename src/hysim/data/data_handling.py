@@ -56,7 +56,7 @@ class EarthData(Enum):
     SURFACE_BITMAP = "earth.jpg"
 
 
-def get_user_data_path(filename):
+def get_user_data_path(run_directory: str, filename: str):
     """Gets data paths of file in run directory
 
     Walks through working directory to retrieve file
@@ -72,7 +72,7 @@ def get_user_data_path(filename):
     str
         Path to file
     """
-    for root, _, files in os.walk(Path.cwd()):
+    for root, _, files in os.walk(run_directory):
         for file in files:
             if file == filename:
                 return os.path.join(root, file).replace("\\", "/")
@@ -82,7 +82,7 @@ def get_user_data_path(filename):
     # )
 
 
-def get_kernel_paths():
+def get_kernel_paths() -> list[str]:
     """Retrieves all kernel file paths from kernel database
 
     Returns

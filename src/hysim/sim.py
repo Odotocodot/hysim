@@ -84,7 +84,7 @@ class RendererControl:
         self.render = mi.render(self.mitsuba_scene)
 
 
-def run_sim(run_directory):
+def run_sim(run_directory: str):
     """Runs a single simulator case
 
     The function is called by the entry script to run a
@@ -128,8 +128,8 @@ def run_sim(run_directory):
     scene.build_integrator()
     scene.build_sampler()
     scene.build_sun()
-    scene.build_chaser()
-    scene.build_target()
+    scene.build_chaser(run_directory)
+    scene.build_target(run_directory)
     scene.build_earth()
     scene.build_scene_dict()
 
